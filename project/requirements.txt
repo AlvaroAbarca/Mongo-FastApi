@@ -1,0 +1,14 @@
+aiofiles==0.6.0
+fastapi==0.85.1
+# flower==0.9.7
+# Jinja2==3.0.3
+pytest==6.2.4
+# redis==3.5.3
+requests==2.25.1
+uvicorn==0.13.4
+python-rapidjson==1.8
+ciso8601==2.2.0
+
+nest_asyncio==1.5.5
+
+motor==3.1.1

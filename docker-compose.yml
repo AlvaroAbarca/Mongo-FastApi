@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: ./project
+    ports:
+      - 8004:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    volumes:
+      - ./project:/usr/src/app
+    env_file:
+      - ./.env
+
+  # worker:
+  #   build: ./project
+  #   command: celery worker --app=worker.celery --loglevel=info --logfile=logs/celery.log
+  #   volumes:
+  #     - ./project:/usr/src/app
+  #   env_file:
+  #     - ./.env
+  #   depends_on:
+  #     - web
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+    volumes:
+      -/home/alvarore/data:/data/db
+
+networks:
+  default:
+    name: zoco-api
+    external: true
